@@ -26,8 +26,8 @@ SiteListEntry.propTypes = {
   logoUrl: PropTypes.string.isRequired,
 };
 
-export default SiteListEntry;
-
 const EntryWrapper = styled.div`
   margin: 10px;
 `;
+
+export default SiteListEntry;

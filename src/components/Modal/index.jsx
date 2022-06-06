@@ -5,12 +5,7 @@ import styled from "styled-components";
 export default function Modal({ children, onClose }) {
   return ReactDom.createPortal(
     <ModalOverlay onClick={onClose}>
-      <ModalContainer>
-        {children}
-        <ModalButton type="button" onClick={onClose}>
-          Sign in with Google
-        </ModalButton>
-      </ModalContainer>
+      <ModalContainer>{children}</ModalContainer>
     </ModalOverlay>,
     document.getElementById("portal"),
   );
@@ -37,17 +32,4 @@ const ModalContainer = styled.div`
   padding: 3em;
   border-radius: 20px;
   z-index: 1000;
-`;
-
-const ModalButton = styled.div`
-  background-color: #7e80ff;
-  opacity: 0.5;
-  border-radius: 10px;
-  cursor: pointer;
-
-  :hover {
-    outline: 1px solid #ff5cb0;
-    opacity: 0.8;
-    font-weight: 700;
-  }
 `;
