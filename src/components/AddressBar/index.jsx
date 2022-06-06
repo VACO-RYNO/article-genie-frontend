@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function SearchBar() {
+function AddressBar() {
   const [searchInput, setSearchInput] = useState("");
 
   const navigate = useNavigate();
@@ -30,8 +30,8 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
-
 const Wrapper = styled.div`
   margin: 30px;
 `;
+
+export default AddressBar;

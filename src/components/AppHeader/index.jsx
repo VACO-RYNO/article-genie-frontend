@@ -27,6 +27,7 @@ function AppHeader({ isLogin }) {
       {isLoginModalOpen && (
         <Modal onClose={() => setIsLoginModalOpen(false)}>
           Let Genie Works.
+          <ModalButton type="button">Sign in with Google</ModalButton>
         </Modal>
       )}
       <h1>This is AppHeader</h1>
@@ -46,8 +47,21 @@ AppHeader.propTypes = {
   isLogin: PropTypes.bool.isRequired,
 };
 
-export default AppHeader;
-
 const Wrapper = styled.div`
   border: solid 1px #00539cff;
 `;
+
+const ModalButton = styled.div`
+  background-color: #7e80ff;
+  opacity: 0.5;
+  border-radius: 10px;
+  cursor: pointer;
+
+  :hover {
+    outline: 1px solid #ff5cb0;
+    opacity: 0.8;
+    font-weight: 700;
+  }
+`;
+
+export default AppHeader;

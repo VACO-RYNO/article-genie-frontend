@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -7,20 +8,15 @@ import SiteListEntry from "../SiteListEntry";
 function SiteList({ isLogin }) {
   const [recommendedSites, setRecommendedSites] = useState([]);
 
-  const getRecommendedSites = useCallback(async () => {
-    const response = await fetch("/data.json", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const { data } = await response.json();
+  const getRecommendedSites = async () => {
+    const { data } = await axios.get("/data.json");
 
-    setRecommendedSites(data);
-  }, [setRecommendedSites]);
+    setRecommendedSites(data.sites);
+  };
 
   useEffect(() => {
     getRecommendedSites();
-  }, [getRecommendedSites]);
+  }, []);
 
   return (
     <GridWrapper>
@@ -44,10 +40,10 @@ SiteList.propTypes = {
   isLogin: PropTypes.bool.isRequired,
 };
 
-export default SiteList;
-
 const GridWrapper = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   margin: 30px;
 `;
+
+export default SiteList;
