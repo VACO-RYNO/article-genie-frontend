@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import PropTypes from "prop-types";
 import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { IoMdClose } from "react-icons/io";
 
 import { login } from "../../api";
-import loginState from "../../recoil/auth/atom";
+import loginStorage from "../../recoil/auth/atom";
+import { CLIENT_ID } from "../../config";
 
 function Login({ onClose }) {
-  const [error, setError] = useState(null);
-  const [loginData, setLoginData] = useRecoilState(loginState);
+  const [IsError, setIsError] = useState(false);
+  const [loginData, setLoginData] = useRecoilState(loginStorage);
 
   useEffect(() => {
     const start = () => {
       gapi.client.init({
-        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        clientId: CLIENT_ID,
         scope: "email",
       });
     };
@@ -33,20 +34,20 @@ function Login({ onClose }) {
     onClose();
   };
 
-  const handleFailure = error => {
-    setError(error);
+  const handleFailure = () => {
+    setIsError(true);
   };
 
   return (
     <Wrapper>
       <CloseButton onClick={onClose} />
-      {error ? (
+      {IsError ? (
         "로그인 오류!"
       ) : (
         <>
           <LoginTitle>Let Genie Works.</LoginTitle>
           <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            clientId={CLIENT_ID}
             onSuccess={handleLogin}
             onFailure={handleFailure}
           ></GoogleLogin>
@@ -55,6 +56,10 @@ function Login({ onClose }) {
     </Wrapper>
   );
 }
+
+Login.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 const Wrapper = styled.div`
   position: relative;
@@ -77,9 +82,5 @@ const LoginTitle = styled.div`
   color: #ff5cb0;
   font-size: 36px;
 `;
-
-Login.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
 
 export default Login;
