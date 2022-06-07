@@ -16,7 +16,7 @@ API.interceptors.request.use(req => {
   return req;
 });
 
-export const login = () => API.post("/api/login");
+export const login = userInfo => API.post("/api/login", userInfo);
 
 export const getRecentSites = userId => API.get(`/api/users/${userId}/sites`);
 export const transformSite = originUrl => API.post("/api/sites", { originUrl });

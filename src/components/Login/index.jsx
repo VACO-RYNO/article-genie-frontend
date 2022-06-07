@@ -25,7 +25,7 @@ function Login({ onClose }) {
 
   const handleLogin = async googleData => {
     const { name, email, imageUrl } = googleData.profileObj;
-    const { data } = await login({ name, email, imageUrl });
+    const { data } = await login({ name, email, profileImageUrl: imageUrl });
 
     setLoginData(data);
     localStorage.setItem("loginData", JSON.stringify(data));
