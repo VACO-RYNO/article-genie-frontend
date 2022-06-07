@@ -5,7 +5,9 @@ import styled from "styled-components";
 export default function Modal({ children, onClose }) {
   return ReactDom.createPortal(
     <ModalOverlay onClick={onClose}>
-      <ModalContainer>{children}</ModalContainer>
+      <ModalContainer onClick={e => e.stopPropagation()}>
+        {children}
+      </ModalContainer>
     </ModalOverlay>,
     document.getElementById("portal"),
   );
@@ -25,11 +27,13 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 500px;
+  height: 350px;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 3em;
+  box-shadow: 0px 8px 30px;
   border-radius: 20px;
   z-index: 1000;
 `;
