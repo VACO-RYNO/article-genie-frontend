@@ -16,9 +16,25 @@ API.interceptors.request.use(req => {
   return req;
 });
 
+API.interceptors.response.use(
+  res => {
+    return res;
+  },
+  err => {
+    if (err.response.status === 401) window.location.href = "/login";
+
+    return Promise.reject(err);
+  },
+);
+
 export const login = userInfo => API.post("/api/login", userInfo);
 
-export const getRecentSites = userId => API.get(`/api/users/${userId}/sites`);
+export const getRecentSites = async userId => {
+  const { data } = await API.get(`/api/users/${userId}/sites`);
+
+  return data;
+};
+
 export const transformSite = originUrl => API.post("/api/sites", { originUrl });
 
 export const createArticle = (userId, article) =>

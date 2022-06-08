@@ -8,7 +8,7 @@ function SiteListEntry({ name, originUrl, logoUrl }) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    navigate(`/genie-mode/${originUrl}`);
+    navigate(`/genie-mode/?url=${originUrl}`);
   };
 
   return (

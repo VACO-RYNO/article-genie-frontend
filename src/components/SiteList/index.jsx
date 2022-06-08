@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 import SiteListEntry from "../SiteListEntry";
 
-function SiteList({ isLogin }) {
+function SiteList() {
   const [recommendedSites, setRecommendedSites] = useState([]);
 
   const getRecommendedSites = async () => {
@@ -20,25 +19,17 @@ function SiteList({ isLogin }) {
 
   return (
     <GridWrapper>
-      {isLogin ? (
-        <SiteListEntry />
-      ) : (
-        recommendedSites.map((site, index) => (
-          <SiteListEntry
-            key={index}
-            name={site.name}
-            originUrl={site.originUrl}
-            logoUrl={site.logoUrl}
-          />
-        ))
-      )}
+      {recommendedSites.map((site, index) => (
+        <SiteListEntry
+          key={index}
+          name={site.name}
+          originUrl={site.originUrl}
+          logoUrl={site.logoUrl}
+        />
+      ))}
     </GridWrapper>
   );
 }
-
-SiteList.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
-};
 
 const GridWrapper = styled.div`
   display: grid;
