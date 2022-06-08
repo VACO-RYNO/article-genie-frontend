@@ -8,16 +8,16 @@ import { IoMdClose } from "react-icons/io";
 
 import { login } from "../../api";
 import loginStorage from "../../recoil/auth/atom";
-import { CLIENT_ID } from "../../config";
+import config from "../../config";
 
 function Login({ onClose }) {
-  const [IsError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [loginData, setLoginData] = useRecoilState(loginStorage);
 
   useEffect(() => {
     const start = () => {
       gapi.client.init({
-        clientId: CLIENT_ID,
+        clientId: config.CLIENT_ID,
         scope: "email",
       });
     };
@@ -41,13 +41,13 @@ function Login({ onClose }) {
   return (
     <Wrapper>
       <CloseButton onClick={onClose} />
-      {IsError ? (
+      {isError ? (
         "로그인 오류!"
       ) : (
         <>
           <LoginTitle>Let Genie Works.</LoginTitle>
           <GoogleLogin
-            clientId={CLIENT_ID}
+            clientId={config.CLIENT_ID}
             onSuccess={handleLogin}
             onFailure={handleFailure}
           ></GoogleLogin>
