@@ -11,7 +11,7 @@ import loginState from "../../recoil/auth";
 function UserSiteList() {
   const loginData = useRecoilValue(loginState);
   const { data } = useQuery(
-    "fetchRecentSites",
+    ["fetchRecentSites", loginData.data._id],
     () => getRecentSites(loginData.data._id),
     { select: response => response.data },
   );
