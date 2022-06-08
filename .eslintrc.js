@@ -23,6 +23,7 @@ module.exports = {
     "no-console": "off",
     "func-names": "off",
     "no-shadow": "off",
+    "no-underscore-dangle": "off",
   },
   settings: {
     "import/resolver": {

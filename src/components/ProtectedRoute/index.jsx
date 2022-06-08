@@ -1,16 +1,15 @@
-import PropTypes from "prop-types";
 import { Navigate, Outlet } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "../../recoil/auth";
 
-function ProtectedRoute({ loggedIn }) {
-  if (!loggedIn) {
+function ProtectedRoute() {
+  const isLogin = useRecoilValue(isLoginState);
+
+  if (!isLogin) {
     return <Navigate to={"/"} replace />;
   }
 
   return <Outlet />;
 }
-
-ProtectedRoute.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-};
 
 export default ProtectedRoute;

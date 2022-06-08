@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import styled from "styled-components";
@@ -7,12 +7,12 @@ import PropTypes from "prop-types";
 import { IoMdClose } from "react-icons/io";
 
 import { login } from "../../api";
-import loginStorage from "../../recoil/auth/atom";
+import loginState from "../../recoil/auth";
 import config from "../../config";
 
 function Login({ onClose }) {
   const [isError, setIsError] = useState(false);
-  const [loginData, setLoginData] = useRecoilState(loginStorage);
+  const setLoginState = useSetRecoilState(loginState);
 
   useEffect(() => {
     const start = () => {
@@ -28,7 +28,7 @@ function Login({ onClose }) {
     const { name, email, imageUrl } = googleData.profileObj;
     const { data } = await login({ name, email, profileImageUrl: imageUrl });
 
-    setLoginData(data);
+    setLoginState(data);
     localStorage.setItem("loginData", JSON.stringify(data));
 
     onClose();
