@@ -2,33 +2,32 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
-import loginState from "../../recoil/auth";
 
-function Profile({ onClose }) {
+import loginState from "../../recoil/auth";
+import useModal from "../../hooks/useModal";
+
+function Profile() {
   const setLoginState = useSetRecoilState(loginState);
   const navigate = useNavigate();
+  const { hideModal } = useModal();
 
   const handleLogout = () => {
     localStorage.clear();
     setLoginState(null);
 
-    onClose();
+    hideModal();
     navigate("/");
   };
 
   return (
     <Wrapper>
       <Link to={"/my-article"}>
-        <MyArticleButton onClick={onClose}>마이 아티클</MyArticleButton>
+        <MyArticleButton onClick={hideModal}>마이 아티클</MyArticleButton>
       </Link>
       <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
     </Wrapper>
   );
 }
-
-Profile.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
 
 const Wrapper = styled.div`
   display: flex;

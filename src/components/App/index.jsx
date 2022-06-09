@@ -9,11 +9,15 @@ import MyArticlePage from "../../pages/MyArticlePage";
 import AppHeader from "../AppHeader";
 import ProtectedRoute from "../ProtectedRoute";
 
+import Container from "../shared/Container";
+import GlobalModal from "../GlobalModal";
+
 function App() {
   return (
     <>
       <AppHeader />
       <Main>
+        <GlobalModal />
         <Container>
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -29,10 +33,6 @@ function App() {
 }
 
 const Main = styled.main`
-  border: 1px solid pink;
-`;
-
-const Container = styled.div`
   border: 1px solid pink;
 `;
 

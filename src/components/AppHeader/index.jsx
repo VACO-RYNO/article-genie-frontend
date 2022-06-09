@@ -4,27 +4,28 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BsPersonCircle } from "react-icons/bs";
 
-import Modal from "../Modal";
-import Login from "../Login";
 import Heading from "../shared/Heading";
 
 import logo from "../../assets/images/genie-logo.png";
 import { isLoginState } from "../../recoil/auth";
-import ProfileModal from "../ProfileModal";
-import Profile from "../Profile";
+import useModal from "../../hooks/useModal";
+import Modal from "../Modal";
 
 function AppHeader() {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const { showModal } = useModal();
   const isLogin = useRecoilValue(isLoginState);
-
-  const handleLoginClick = () => {
-    setIsLoginModalOpen(true);
-  };
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const handleProfileClick = () => {
-    setIsProfileModalOpen(true);
+    showModal({
+      modalType: "ProfileModal",
+    });
+  };
+
+  const handleLoginClick = () => {
+    showModal({
+      modalType: "LoginModal",
+    });
   };
 
   const handleShareButtonClick = async e => {
@@ -46,16 +47,7 @@ function AppHeader() {
           링크가 복사되었습니다.
         </Modal>
       )}
-      {isProfileModalOpen && (
-        <ProfileModal onClose={() => setIsProfileModalOpen(false)}>
-          <Profile onClose={() => setIsProfileModalOpen(false)} />
-        </ProfileModal>
-      )}
-      {isLoginModalOpen && (
-        <Modal onClose={() => setIsLoginModalOpen(false)}>
-          <Login onClose={() => setIsLoginModalOpen(false)} />
-        </Modal>
-      )}
+
       <Link to={"/"}>
         <Brand>
           <img src={logo} alt="genie-logo"></img>

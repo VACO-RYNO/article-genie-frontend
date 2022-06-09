@@ -1,10 +1,13 @@
 import ReactDom from "react-dom";
-
 import styled from "styled-components";
 
-export default function ProfileModal({ children, onClose }) {
+import useModal from "../../hooks/useModal";
+
+export default function ProfileModal({ children }) {
+  const { hideModal } = useModal();
+
   return ReactDom.createPortal(
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay onClick={hideModal}>
       <ModalContainer onClick={e => e.stopPropagation()}>
         {children}
       </ModalContainer>
