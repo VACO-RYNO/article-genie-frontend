@@ -7,8 +7,24 @@ import AddressBar from "../../components/AddressBar";
 import GenieModeMain from "../../components/GenieModeMain";
 import GenieSideBar from "../../components/GenieSideBar";
 import GenieCornerButton from "../../components/GenieCornerButton";
+import useModal from "../../hooks/useModal";
 
 function GenieModePage() {
+  const { showModal } = useModal();
+
+  const handleLinkModal = () => {
+    showModal({
+      modalType: "LinkModal",
+      modalProps: {
+        message: "링크가 복사되었습니다.",
+      },
+    });
+  };
+
+  const linkButton = document.querySelector("#genie-mode-link");
+
+  linkButton?.addEventListener("click", handleLinkModal);
+
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
       <ErrorBoundary

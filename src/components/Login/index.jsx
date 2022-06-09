@@ -3,16 +3,17 @@ import { useSetRecoilState } from "recoil";
 import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { IoMdClose } from "react-icons/io";
 
 import { login } from "../../api";
 import loginState from "../../recoil/auth";
 import config from "../../config";
+import useModal from "../../hooks/useModal";
 
-function Login({ onClose }) {
+function Login() {
   const [isError, setIsError] = useState(false);
   const setLoginState = useSetRecoilState(loginState);
+  const { hideModal } = useModal();
 
   useEffect(() => {
     const start = () => {
@@ -31,7 +32,7 @@ function Login({ onClose }) {
     setLoginState(data);
     localStorage.setItem("loginData", JSON.stringify(data));
 
-    onClose();
+    hideModal();
   };
 
   const handleFailure = () => {
@@ -40,7 +41,7 @@ function Login({ onClose }) {
 
   return (
     <Wrapper>
-      <CloseButton onClick={onClose} />
+      <CloseButton onClick={hideModal} />
       {isError ? (
         "로그인 오류!"
       ) : (
@@ -56,10 +57,6 @@ function Login({ onClose }) {
     </Wrapper>
   );
 }
-
-Login.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
 
 const Wrapper = styled.div`
   position: relative;
