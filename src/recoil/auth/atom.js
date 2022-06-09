@@ -7,4 +7,9 @@ const loginStorage = atom({
     : null,
 });
 
+export const sideBarAtom = atom({
+  key: "sideBar",
+  default: false,
+});
+
 export default loginStorage;

@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
 import { BsPersonCircle } from "react-icons/bs";
 
 import Modal from "../Modal";
@@ -16,18 +16,36 @@ import Profile from "../Profile";
 function AppHeader() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const isLogin = useRecoilValue(isLoginState);
-
-  const handleProfileClick = () => {
-    setIsProfileModalOpen(true);
-  };
 
   const handleLoginClick = () => {
     setIsLoginModalOpen(true);
   };
 
+  const handleProfileClick = () => {
+    setIsProfileModalOpen(true);
+  };
+
+  const handleShareButtonClick = async e => {
+    e.preventDefault();
+
+    if (!isLogin) {
+      handleLoginClick();
+      return;
+    }
+
+    await navigator.clipboard.writeText(window.location.href);
+    setIsConfirmModalOpen(true);
+  };
+
   return (
     <Header>
+      {isConfirmModalOpen && (
+        <Modal onClose={() => setIsConfirmModalOpen(false)}>
+          링크가 복사되었습니다.
+        </Modal>
+      )}
       {isProfileModalOpen && (
         <ProfileModal onClose={() => setIsProfileModalOpen(false)}>
           <Profile onClose={() => setIsProfileModalOpen(false)} />
@@ -44,7 +62,9 @@ function AppHeader() {
           <Heading>Genie.</Heading>
         </Brand>
       </Link>
-
+      {window.location.pathname.includes("genie-mode") && (
+        <img alt="공유 버튼" onClick={handleShareButtonClick}></img>
+      )}
       {isLogin ? (
         <ProfileIcon onClick={handleProfileClick} />
       ) : (

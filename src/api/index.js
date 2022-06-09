@@ -35,7 +35,11 @@ export const getRecentSites = async userId => {
   return data;
 };
 
-export const transformSite = originUrl => API.post("/api/sites", { originUrl });
+export const transformSite = async originUrl => {
+  const { data } = await API.post("/api/sites", { originUrl });
+
+  return data;
+};
 
 export const createArticle = (userId, article) =>
   API.post(`/api/users/${userId}/articles`, { ...article });
