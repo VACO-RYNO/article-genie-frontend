@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+
 import styled from "styled-components";
 
 import MainPage from "../../pages/MainPage";
@@ -7,8 +8,6 @@ import MyArticlePage from "../../pages/MyArticlePage";
 
 import AppHeader from "../AppHeader";
 import ProtectedRoute from "../ProtectedRoute";
-
-import Container from "../shared/Container";
 
 function App() {
   return (
@@ -30,7 +29,11 @@ function App() {
 }
 
 const Main = styled.main`
-  margin-top: 110px;
+  border: 1px solid pink;
+`;
+
+const Container = styled.div`
+  border: 1px solid pink;
 `;
 
 export default App;
